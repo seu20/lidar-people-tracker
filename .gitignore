@@ -1,0 +1,36 @@
+# ===== C++ 빌드 산출물 (rpi/) =====
+*.o
+*.obj
+*.out
+*.exe
+radar_node          # Makefile TARGET 이름, 실제 바이너리명으로 바꿔줘
+*.d
+build/
+bin/
+
+# ===== Python (pc-ui/) =====
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+*.egg-info/
+
+# ===== VS Code =====
+.vscode/
+*.code-workspace
+
+# ===== STM32 (stm32-nodes/) — CubeIDE 쓸 경우 =====
+Debug/
+Release/
+*.launch
+.settings/
+.metadata/
+
+# ===== OS 관련 =====
+.DS_Store          # Mac
+Thumbs.db          # Windows
+
+# ===== 로그/임시파일 =====
+*.log
+*.tmp
