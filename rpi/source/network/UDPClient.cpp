@@ -22,8 +22,8 @@ UdpSender::UdpSender(const std::string& ip, int port)
     }
     memset(&dest_addr, 0, sizeof(dest_addr));
     dest_addr.sin_family = AF_INET;     // 주소 체계
-    dest_addr.sin_port = htons(port);   // 컴퓨터가 쓰는 리틀 엔디언을 네트워크가 사용하는 빅엔디언으로 변환
-    inet_pton(AF_INET, ip.c_str(), &dest_addr.sin_addr);    //c_str은 c style 문자열로 변환해줌, c++ 문자열은 + 기능있는데 이런 거 다 뺌
+    dest_addr.sin_port = htons(port);   // 컴퓨터가 쓰는 리틀 엔디언을 네트워크가 사용하는 빅엔디언으로 변환 (지정된 포트)
+    inet_pton(AF_INET, ip.c_str(), &dest_addr.sin_addr);    //c_str은 c style 문자열로 변환해줌, c++ 문자열은 + 기능있는데 이런 거 다 뺌 (지정된 ip)
 }
 
 bool UdpSender::send(const ScanFrame &frame)
