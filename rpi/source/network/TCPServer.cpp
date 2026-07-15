@@ -15,7 +15,7 @@ struct sockaddr_in {
 
 TCPServer::TCPServer(int port)
 {
-    listen_fd = socket(AF_INET, SOCK_STREAM, 0)
+    listen_fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)
     if ( listen_fd == -1 )
     {
         perror("socket creation failed");
@@ -32,7 +32,7 @@ TCPServer::TCPServer(int port)
         perror("bind failed");
         exit(-1);
     }
-    if (listen(listen_fd, 1) == -1)   // 연결요청 대기(backlog 1)
+    if (listen(listen_fd, 2) == -1)   // 연결요청 대기(backlog 2: 두개까지만 받음)
     {
         perror("listen failed");
         exit(-1);
