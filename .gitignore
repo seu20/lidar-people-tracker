@@ -33,4 +33,4 @@ Thumbs.db          # Windows
 
 # ===== 로그/임시파일 =====
 *.log
-*.tmp
+*.tmpthird_party/
