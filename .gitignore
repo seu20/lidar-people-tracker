@@ -35,3 +35,6 @@ Thumbs.db          # Windows
 *.log
 third_party/
 *.exe
+pc/lidar_detection
+pc/lidar_viewer
+rpi/lidar_detection
