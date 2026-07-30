@@ -45,7 +45,6 @@ void KalmanFilter::predict(uint64_t time_ms)
           0, 0, 0, 1;
 
      // process noise: 모델(등속 가정)이 얼마나 부정확할 수 있는지
-     // 위치보다 속도 쪽을 더 크게 잡아서, 실제 속도 변화에 유연하게 반응하도록 함
      Eigen::Matrix2d Q = Matrix2d::Zero();
      Q(0,0) = (ACCEL_STD*ACCEL_STD);
      Q(1,1) = (ACCEL_STD*ACCEL_STD);
