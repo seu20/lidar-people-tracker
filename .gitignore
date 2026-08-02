@@ -39,4 +39,5 @@ third_party/
 pc/lidar_detection
 pc/lidar_viewer
 rpi/lidar_detection
+*.zip
 
