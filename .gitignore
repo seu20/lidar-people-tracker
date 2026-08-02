@@ -33,13 +33,10 @@ Thumbs.db          # Windows
 
 # ===== 로그/임시파일 =====
 *.log
-<<<<<<< HEAD
 third_party/
+*.tmp
 *.exe
 pc/lidar_detection
 pc/lidar_viewer
 rpi/lidar_detection
-=======
-*.tmpthird_party/
-"pc/third_party/
->>>>>>> 4d8c647 (M_PI 상수 수정, README 파일 수정)
+
