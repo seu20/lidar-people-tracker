@@ -134,7 +134,7 @@ void ProcessThread::sendBackgroundFrame()
     BackgroundFrame frame;
     frame.type = MsgType::BACKGROUND;
 
-    const auto &background = background_->getBackground();   // getter 추가 필요 (저번 답변 참고)
+    const auto &background = background_->getBackground();   
     size_t count = std::min(background.size(), MAX_BINS);
 
     for (size_t i = 0; i < count; ++i)

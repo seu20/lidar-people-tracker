@@ -24,7 +24,7 @@
 
 int main()
 {
-    // 1. 라이다 센서 + SDK 쓰레드
+    // 1. 라이다 센서 + SDK 쓰레드 시작
     Lidar lidar;
     SDKThread sdk_thread(LIDAR_PORT, LIDAR_BAUD, &lidar);
 
@@ -35,13 +35,13 @@ int main()
         return -1;
     }
 
-    // 2. 배경 캘리브레이션 (SDK가 스캔을 채워주고 있어야 동작함)
+    // 2. Calibration 시작 ( 배경 제거 - 5초 )
     BackgroundModel background(BG_NUM_BINS, BG_K);
     std::cout << "Calibrating background... (" << BG_CALIB_MS << "ms)" << std::endl;
     background.calibrate(lidar, BG_CALIB_MS);
     std::cout << "Calibration done." << std::endl;
 
-    // 3. UDP 송신자 + ProcessThread (아직 시작은 안 함)
+    // 3. UDP 송신자 소켓 열기 + ProcessThread (아직 시작은 안 함)
     UDPSender udp_sender(PC_IP, UDP_PORT);
     ProcessThread process_thread(&lidar, &background, GRID_MAX_RANGE, GRID_CELL_SIZE, std::move(udp_sender));
 
@@ -56,7 +56,7 @@ int main()
     }
     std::cout << "PC connected." << std::endl;
 
-    // 배경은 캘리브레이션 끝난 직후 딱 한 번만 PC로 보냄
+    // TCP 연결 후 배경 전송
     process_thread.sendBackgroundFrame();
 
     bool running = false;

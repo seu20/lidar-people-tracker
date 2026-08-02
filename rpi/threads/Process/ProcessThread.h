@@ -18,7 +18,8 @@ private:
 
     Grid grid_;
     Tracker tracker_;
-    UDPSender udp_sender_;          // 소유권째로 받음 (move-only)
+    // 소유권째로 받음 (std::move로 받음)
+    UDPSender udp_sender_;         
 
     std::atomic<bool> running_;
     pthread_t thread_id_;

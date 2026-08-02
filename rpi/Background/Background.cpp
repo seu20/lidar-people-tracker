@@ -16,14 +16,14 @@ int BackgroundModel::AngleToBin(float angle_rad) const {
     return bin;
 }
 
-float BackgroundModel::median(std::vector<float> values) const {  // 값 복사로 받음 (정렬해도 원본 안 바뀌게)
+float BackgroundModel::median(std::vector<float> values) const {  
     if (values.empty()) return -1.0f;  // invalid 처리
     
     std::sort(values.begin(), values.end());
     
     size_t n = values.size();
     if (n % 2 == 1) {
-        // 홀수개: 정확히 가운데 값
+        // 홀수개: 가운데 값
         return values[n / 2];
     } else {
         // 짝수개: 가운데 두 값의 평균
@@ -32,6 +32,7 @@ float BackgroundModel::median(std::vector<float> values) const {  // 값 복사�
 }
 
 float BackgroundModel::stddev(const std::vector<float>& values) const {
+    // 최소 값 개수 검사
     if (values.size() < 2) return 0.0f;
     
     float mean = 0.0f;
@@ -54,13 +55,15 @@ void BackgroundModel::calibrate(Lidar &lidar, uint64_t duration_ms)
         
         lidar.waitForData(); 
 
-        std::vector<SensorPoint> sensorpoint = lidar.getData();  // 실제 데이터 받아옴 (기존에 빠져있었음)
+        //데이터 받아옴 
+        std::vector<SensorPoint> sensorpoint = lidar.getData(); 
         
         for (auto &[rad, dist] : sensorpoint)
         {
             if (dist <= MIN_VALID_RANGE || dist > MAX_VALID_RANGE) continue;
             int bin = AngleToBin(rad);
-            samples_[bin].push_back(dist);   // ★ bin 위치에 "누적"만 함, samples_ 자체는 크기 안 바뀜
+            // bin 위치에 누적함
+            samples_[bin].push_back(dist);   
         }
     }
     computeBackground();
@@ -69,27 +72,30 @@ void BackgroundModel::calibrate(Lidar &lidar, uint64_t duration_ms)
 
 void BackgroundModel::computeBackground()
 {
-    static constexpr float MIN_STD = 0.05f;   // 라이다 실측 노이즈 하한 (2cm)
+    // 라이다의 최소 오차 표준편차 (5cm)
+    static constexpr float MIN_STD = 0.05f;   
     
-    background_.assign(num_bins_, MAX_RANGE_FALLBACK);  // fallback 기본값 먼저 채움
+    // 값이 안들어왔을 때를 대비해서 기본값으로 저장
+    background_.assign(num_bins_, MAX_RANGE_FALLBACK); 
     std_.assign(num_bins_, DEFAULT_STD_FALLBACK);
     valid_.assign(num_bins_, 0);  
     
     for (int i = 0; i < num_bins_; i++)
     {
-        // if (samples_[i].empty()) continue;   // 데이터 없는 bin은 fallback 값 유지
-        if (samples_[i].empty()) continue;
+        // 샘플이 5개밖에 없는 bin은 불확실한 bin이기 때문에 건너뛰기
+        if (samples_[i].size() < 5) continue;
         background_[i] = median(samples_[i]);
-        std_[i] = std::max(stddev(samples_[i]), MIN_STD);   // ★
-        valid_[i] = 1;                              // ★
+        std_[i] = std::max(stddev(samples_[i]), MIN_STD);   
+        valid_[i] = 1;                              
     }
-    
-    samples_.assign(static_cast<size_t>(num_bins_), {}); // samples 초기화
+    // 메모리 절약을 위해 samples 초기화
+    samples_.assign(static_cast<size_t>(num_bins_), {}); 
 }
 
 bool BackgroundModel::isForeground(float angle, float range) const
 {
-    if (range <= MIN_VALID_RANGE || range > MAX_VALID_RANGE) return false;   // ★ 무효/범위 밖 컷
+    // 무효/범위 밖 컷
+    if (range <= MIN_VALID_RANGE || range > MAX_VALID_RANGE) return false;   
     int bin = AngleToBin(angle);
     if (!valid_[bin]) return false; 
     float diff = background_[bin] - range;

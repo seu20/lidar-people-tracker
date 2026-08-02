@@ -38,6 +38,7 @@ UDPSender::~UDPSender()
 }
 
 // 이동 생성자
+// std::move 사용할때 socket fd 바꿔주는 역할
 UDPSender::UDPSender(UDPSender&& other) noexcept
     : sockfd(other.sockfd), dest_addr(other.dest_addr)
 {
@@ -57,6 +58,9 @@ UDPSender& UDPSender::operator=(UDPSender&& other) noexcept
     }
     return *this;
 }
+//복사 생성&대입 불가 
+UDPSender(const UDPSender&) = delete;
+UDPSender& operator=(const UDPSender&) = delete;
 
 void UDPSender::send(const void *data, size_t len)
 {
