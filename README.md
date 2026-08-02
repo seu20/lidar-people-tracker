@@ -31,7 +31,7 @@ START/STOP은 상태를 바꾸는 메시지입니다. 유실되면 PC UI와 RPi�
 ---
 <table>
 <tr>
-<td width="50%" valign="top">
+<td width="60%" valign="top">
 
 ## 시스템 구성
 
