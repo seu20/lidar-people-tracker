@@ -69,10 +69,11 @@ void BackgroundModel::calibrate(Lidar &lidar, uint64_t duration_ms)
 
 void BackgroundModel::computeBackground()
 {
-    static constexpr float MIN_STD = 0.02f;   // 라이다 실측 노이즈 하한 (2cm)
+    static constexpr float MIN_STD = 0.05f;   // 라이다 실측 노이즈 하한 (2cm)
     
     background_.assign(num_bins_, MAX_RANGE_FALLBACK);  // fallback 기본값 먼저 채움
     std_.assign(num_bins_, DEFAULT_STD_FALLBACK);
+    valid_.assign(num_bins_, 0);  
     
     for (int i = 0; i < num_bins_; i++)
     {
@@ -80,6 +81,7 @@ void BackgroundModel::computeBackground()
         if (samples_[i].empty()) continue;
         background_[i] = median(samples_[i]);
         std_[i] = std::max(stddev(samples_[i]), MIN_STD);   // ★
+        valid_[i] = 1;                              // ★
     }
     
     samples_.assign(static_cast<size_t>(num_bins_), {}); // samples 초기화
@@ -89,6 +91,7 @@ bool BackgroundModel::isForeground(float angle, float range) const
 {
     if (range <= MIN_VALID_RANGE || range > MAX_VALID_RANGE) return false;   // ★ 무효/범위 밖 컷
     int bin = AngleToBin(angle);
+    if (!valid_[bin]) return false; 
     float diff = background_[bin] - range;
     return (diff > k_ * std_[bin]);
 }

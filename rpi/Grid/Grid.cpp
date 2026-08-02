@@ -129,7 +129,7 @@ std::vector<Point2D> Grid::Cluster()    //bfs를 통한 클러스터
                     }
                 }
             }
-            static constexpr int MIN_CLUSTER_CELLS = 3;
+            static constexpr int MIN_CLUSTER_CELLS = 6;
             if (cell_count < MIN_CLUSTER_CELLS) continue;   // MIN_CLUSTER_CELLS 를 못 넘으면 cluster로 판단 X
 
             centroids.push_back(CentroidCalculate(Cell(sum_clusters_r, sum_clusters_c), cell_count));

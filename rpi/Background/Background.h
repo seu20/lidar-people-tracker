@@ -22,6 +22,7 @@ private:
     std::vector<float> std_;                     // bin별 표준편차 (노이즈 정도)
     
     float k_;                                    // foreground 판정 민감도 (표준편차 배수, 보통 2~3)
+    std::vector<uint8_t> valid_;   // private에 추가
 
     int AngleToBin(float angle_rad) const;
     float median(std::vector<float> values) const;

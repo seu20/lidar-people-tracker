@@ -20,7 +20,7 @@ TCPReceiver::TCPReceiver(int port)
     {
         perror("socket creation failed");
         exit(-1);
-    }
+    }   
     struct sockaddr_in listen_addr;
     memset(&listen_addr, 0, sizeof(listen_addr));   // 초기화
     listen_addr.sin_family = AF_INET;   // IPv4 

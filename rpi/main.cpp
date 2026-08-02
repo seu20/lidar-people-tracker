@@ -16,7 +16,7 @@
 #define LIDAR_BAUD      128000
 
 #define BG_NUM_BINS     360     // 0.5도 단위 (MAX_BINS와 일치해야 함)
-#define BG_K            2.5f    // foreground 판정 민감도
+#define BG_K            3.0f    // foreground 판정 민감도
 #define BG_CALIB_MS     5000    // 캘리브레이션 3초
 
 #define GRID_MAX_RANGE  800     // cm 단위, LiDAR 최대 측정 거리
