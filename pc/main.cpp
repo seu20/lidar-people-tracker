@@ -286,7 +286,7 @@ int main(int, char**)
                     draw_list->AddCircle(origin, r_px, COL_RING, 0, 1.0f);
                 } else {
                     // 화면 위쪽 반원 (ImGui 각도: 0=오른쪽, 시계방향 증가)
-                    draw_list->PathArcTo(origin, r_px, IM_PI, 2.0f * IM_PI, 64);
+                    draw_list->PathArcTo(origin, r_px, M_PI, 2.0f * M_PI, 64);
                     draw_list->PathStroke(COL_RING, 0, 1.0f);
                 }
 
