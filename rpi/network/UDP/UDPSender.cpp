@@ -58,9 +58,6 @@ UDPSender& UDPSender::operator=(UDPSender&& other) noexcept
     }
     return *this;
 }
-//복사 생성&대입 불가 
-UDPSender(const UDPSender&) = delete;
-UDPSender& operator=(const UDPSender&) = delete;
 
 void UDPSender::send(const void *data, size_t len)
 {
