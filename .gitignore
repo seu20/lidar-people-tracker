@@ -41,3 +41,4 @@ pc/lidar_viewer
 rpi/lidar_detection
 *.zip
 
+pc/imgui.ini
