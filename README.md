@@ -5,8 +5,9 @@ Raspberry Pi에서 스캔 데이터를 처리해 객체의 위치와 속도를 �
 
 **배경 차분 · 점유 그리드 클러스터링 · 칼만 필터 다중 객체 추적을 C++로 직접 구현**했습니다.
 
-> **TODO:** 실행 화면 스크린샷 또는 GIF 삽입
-> `![demo](docs/demo.gif)`
+<p align="center">
+  <video src="docs/lidar_demo.mp4" width="100%"></video>
+</p>
 
 ---
 ## 네트워크
