@@ -3,7 +3,6 @@
 *.obj
 *.out
 *.exe
-radar_node          # Makefile TARGET 이름, 실제 바이너리명으로 바꿔줘
 *.d
 build/
 bin/
@@ -36,9 +35,7 @@ Thumbs.db          # Windows
 third_party/
 *.tmp
 *.exe
-pc/lidar_detection
 pc/lidar_viewer
 rpi/lidar_detection
 *.zip
-
 pc/imgui.ini

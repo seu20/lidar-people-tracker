@@ -15,7 +15,7 @@
 #include <iostream>
 #include <vector>
 
-#define RPI_IP    "100.69.228.12"   // RPi Tailscale IP - 실제 값으로 교체
+#define RPI_IP    "172.30.1.77"   
 #define TCP_PORT  2000
 #define UDP_PORT  3000
 
